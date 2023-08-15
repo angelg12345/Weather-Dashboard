@@ -1,36 +1,30 @@
-var key = "d1b898bb9f32f112ac2ba505b3cdbd73";
+var apikey = "d1b898bb9f32f112ac2ba505b3cdbd73";
 var city = "Sacramento"
+const cityInput = document.querySelector("#search-input");
+const searchButton = document.querySelector("#searchBtn");
+var cityHistoryList = [];
 
-var cityHistory = [];
 
-$('.search').on("click", function (event){
-    event.preventDefault();
-    city = $(this).parent('.btnPar').siblings('.textVal').val().trim();
-    if (city === "") {
-        return;
-    };
-    cityHistory.push(city);
-    
-    localStorage.setItem('city', JSON.stringify(cityHistory));
-    fiveForecast.empty();
-    getHistory();
-    getWeatherToday();
-});
+const cityCoords = () => {
+    const cityName = cityInput.value.trim();
+    if(!cityName) return;
+    console.log(apikey)
+    console.log(cityName)
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apikey}`
 
-var cardBodyToday = $('.cardBodyToday')
-function getWeatherToday(){
-  var getURL = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
+    console.log("Fetching data from:", apiUrl);
 
-  $(cardBodyToday).empty();
+    fetch(apiUrl)
+        .then(res => {
+            console.log("Response status:", res.status);
+            return res.json();
+        })
+        .then(data => {
+            console.log("Parsed JSON data:", data);
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+        });
 }
 
-function FivedayForecast(){
-    
-}
-
-function initLoad() {
-
-	
-};
-
-initLoad();
+searchButton.addEventListener("click", cityCoords);
