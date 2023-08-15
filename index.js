@@ -4,27 +4,16 @@ const cityInput = document.querySelector("#search-input");
 const searchButton = document.querySelector("#searchBtn");
 var cityHistoryList = [];
 
-
-const cityCoords = () => {
+// This is getting information from the api and putting it into the console when you search for a city
+const currentWeatherChoice = (cityName) => {
     const cityName = cityInput.value.trim();
-    if(!cityName) return;
-    console.log(apikey)
-    console.log(cityName)
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apikey}`
-
-    console.log("Fetching data from:", apiUrl);
-
-    fetch(apiUrl)
-        .then(res => {
-            console.log("Response status:", res.status);
-            return res.json();
-        })
-        .then(data => {
-            console.log("Parsed JSON data:", data);
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
-        });
+    console.log(cityName)
+fetch(apiUrl)
+.then(function(response){
+    return response.json();
+    
+})
 }
 
-searchButton.addEventListener("click", cityCoords);
+searchButton.addEventListener("click", cityinfo);
