@@ -39,6 +39,10 @@ var loadSearchhist = () => {
     }
 
     cityHistoryList = JSON.parse(cityHistoryList)
+
+    for (var i = 0; i < cityHistoryList.length; i++){
+        searchHistory(cityHistoryList[i]);
+    } 
 }
 
 
@@ -83,10 +87,25 @@ $("#search-form").on("submit",function(event) {
 });
 
 $("#search-history-cont").on("click", "p", function(){
-    var previousCity = $(this).text();
-    currentWeatherChoice(previousCity);
+    var clickedCity = $(this).text();
+    var clickedCityIndex = cityHistoryList.indexOf(clickedCity);
 
-    var previousCityClicked = $(this);
-    previousCityClicked.remove();
-})
+    if (clickedCityIndex !== -1) {
+       
+        cityHistoryList.splice(clickedCityIndex, 1);
+
+       
+        cityHistoryList.push(clickedCity);
+
+        
+        localStorage.setItem("cityHistoryList", JSON.stringify(cityHistoryList));
+
+      
+        var searchHistoryContainer = $("#search-history-cont");
+        searchHistoryContainer.empty();
+        loadSearchhist();
+        
+       
+        currentWeatherChoice(clickedCity);
+}})
 loadSearchhist()
