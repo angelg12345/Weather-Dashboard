@@ -81,3 +81,12 @@ $("#search-form").on("submit",function(event) {
     searchHistory(cityName)
 
 });
+
+$("#search-history-cont").on("click", "p", function(){
+    var previousCity = $(this).text();
+    currentWeatherChoice(previousCity);
+
+    var previousCityClicked = $(this);
+    previousCityClicked.remove();
+})
+loadSearchhist()
