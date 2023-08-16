@@ -3,6 +3,32 @@ var city = "Sacramento"
 const searchButton = $("#searchBtn");
 var cityHistoryList = [];
 
+
+var searchHistory = (cityName) => {
+    $('.past-search').filter(function() {
+        return $(this).text() === cityName;
+    }).remove();
+
+    var searchHistoryentry = $("<p>");
+    searchHistoryentry.addClass("past-search");
+    searchHistoryentry.text(cityName);
+
+    var searchEntryContainer = $("<div>");
+    searchEntryContainer.addClass("past-search-container");
+
+    searchEntryContainer.append(searchHistoryentry);
+
+    var searchHistoryContainer = $("#search-history-cont");
+    searchHistoryContainer.append(searchEntryContainer);
+
+    if (savedSearches.length > 0){
+        var previousSavedSearch = localStorage.getItem("savedSearches");
+        savedSearches = JSON.parse(previousSavedSearch)
+    }
+
+    savedSearches.push(cityName);
+    localStorage.setItem("savedSearches", JSON.stringify(savedSearches))
+}
 // This is getting information from the api and putting it into the console when you search for a city
 const currentWeatherChoice = (cityName) => {
    
@@ -36,4 +62,6 @@ $("#search-form").on("submit",function(event) {
     event.preventDefault();
     var cityName = $("#search-input").val().trim()
     currentWeatherChoice(cityName)
+    searchHistory(cityName)
+
 });
