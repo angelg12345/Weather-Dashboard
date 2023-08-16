@@ -21,14 +21,30 @@ var searchHistory = (cityName) => {
     var searchHistoryContainer = $("#search-history-cont");
     searchHistoryContainer.append(searchEntryContainer);
 
-    if (savedSearches.length > 0){
-        var previousSavedSearch = localStorage.getItem("savedSearches");
-        savedSearches = JSON.parse(previousSavedSearch)
+    if (cityHistoryList.length > 0){
+        var previousSavedSearch = localStorage.getItem("cityHistoryList");
+        cityHistoryList = JSON.parse(previousSavedSearch)
     }
 
-    savedSearches.push(cityName);
-    localStorage.setItem("savedSearches", JSON.stringify(savedSearches))
+    cityHistoryList.push(cityName);
+    localStorage.setItem("cityHistoryList", JSON.stringify(cityHistoryList))
 }
+
+
+var loadSearchhist = () => {
+    var cityHistoryList = localStorage.getItem("cityHistoryList");
+
+    if (!cityHistoryList){
+        return false;
+    }
+
+    cityHistoryList = JSON.parse(cityHistoryList)
+}
+
+
+
+
+
 // This is getting information from the api and putting it into the console when you search for a city
 const currentWeatherChoice = (cityName) => {
    
