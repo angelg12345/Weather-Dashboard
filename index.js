@@ -52,7 +52,7 @@ var loadSearchhist = () => {
 // This is getting information from the api and putting it into the console when you search for a city
 const currentWeatherChoice = (cityName) => {
    
-const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apikey}`
+var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apikey}`
     
 fetch(apiUrl)
 .then(response => response.json())
@@ -78,10 +78,40 @@ fetch(apiUrl)
 
 }
 
+var fiveDayForecast = (cityName) => {
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apikey}`
+    fetch (apiUrl)
+        .then ((response) => {
+            return response.json();
+        })
+        .then((response) => {
+            var cityLong = response.coord.lon;
+            var cityLat = response.coord.lat;
+            console.log(cityLong + cityLat)
+       
+         const fiveDayURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLong}&appid=${apikey}`
+        fetch (fiveDayURL)
+            .then((response) => {
+                return response.json()
+            })
+            .then((response) => {
+                console.log(response);
+            })
+        })
+    }   
+
+
+
+
+
+
+
+
 $("#search-form").on("submit",function(event) { 
     event.preventDefault();
     var cityName = $("#search-input").val().trim()
     currentWeatherChoice(cityName)
+    fiveDayForecast(cityName)
     searchHistory(cityName)
 
 });
