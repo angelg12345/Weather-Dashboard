@@ -97,6 +97,15 @@ var fiveDayForecast = (cityName) => {
             .then((response) => {
                 console.log(response);
             })
+        
+            var fiveDayTitle = $("#fiveday-forecast-title");
+            fiveDayTitle.text("5-Day Forecast:")
+        
+        
+        
+        
+        
+        
         })
     }   
 
